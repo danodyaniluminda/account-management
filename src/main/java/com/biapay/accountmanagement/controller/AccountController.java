@@ -33,15 +33,15 @@ public class AccountController {
   @Autowired
   private AccountTransactionServiceV2 accountTransactionServiceV2;
 
-  @GetMapping(path = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> getAllAccounts(@RequestParam HashMap<String, String> allRequestParams) {
-    return ResponseUtil.response(accountService.getAccounts(allRequestParams));
-  }
-
-  @GetMapping(path = "/getAccountInfo/{accountNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> getAccountInfo(@PathVariable String accountNumber) {
-    return ResponseUtil.response(accountService.getAccountByNumber(accountNumber));
-  }
+//  @GetMapping(path = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<?> getAllAccounts(@RequestParam HashMap<String, String> allRequestParams) {
+//    return ResponseUtil.response(accountService.getAccounts(allRequestParams));
+//  }
+//
+//  @GetMapping(path = "/getAccountInfo/{accountNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<?> getAccountInfo(@PathVariable String accountNumber) {
+//    return ResponseUtil.response(accountService.getAccountByNumber(accountNumber));
+//  }
 
   @PostMapping(path = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> createAccount(@RequestBody AccountCreateReq accountCreateReq) {
