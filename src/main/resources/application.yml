@@ -1,0 +1,109 @@
+spring:
+  application:
+    name: account-management
+
+  datasource:
+    password: mRb!3j^2&GS
+    url: jdbc:postgresql://localhost:5432/biapay_dev?currentSchema=biapay
+    username: bia_app
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    show-sql: false
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 75MB
+
+  web:
+    resources:
+      add-mappings: true
+
+  #  Kafka
+
+  kafka:
+    bootstrap-servers: kafka-dev.biapay.net:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: account-management-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    topics:
+      notification: TO_NOTIFICATION_SERVICE
+      wallet: TO_WALLET_SERVICE
+      account-management: TO_ACCOUNT_MANAGEMENT
+    #    security:
+    #      protocol: "SSL"
+    #    ssl:
+    #      trust-store-location: classpath:/client-certs/kafka.client.truststore.jks
+    #      trust-store-password: password
+    #      key-store-location: classpath:/client-certs/kafka.client.keystore.jks
+    #      key-store-password: password
+
+server:
+  port: 9004
+  servlet:
+    context-path: /accounts
+  tomcat:
+    max-swallow-size: 25MB
+    max-http-form-post-size: 25MB
+  error:
+    include-message: always
+
+jwt:
+  expiration: 900000
+  secret: 0}faqKI60(,zC9D_H0:^&3~.Y|$B]5`QD('^qPJE12nE^&,FjJQ"=gt'o~^U"nF
+
+cron:
+  midnight: "0 0 0 * * *"
+  each-minute: "0 * * * * *"
+
+logging:
+  level:
+    root: info
+    org.springframework.security: debug
+    org.springframework.web: debug
+    com.biapay.accountmanagement: debug
+    org.springframework.kafka: debug
+    org.apache.kafka: info
+
+keycloak:
+  realm: biapay
+  auth-server-url: https://auth-dev.biapay.net
+  resource: auth-service
+  credentials:
+    secret: u9GJRWYY9kJTZtwWZO2plfDqQNPmoQVz
+  ssl-required: none
+  bearer-only: true
+
+keycloak-config:
+  admin:
+    username: biapay_admin
+    password: AYfASVncA#9tjVs2
+
+
+eureka:
+  client:
+    enabled: false
+    healthcheck:
+      enabled: false
+    service-url:
+      defaultZone: http://service-discovery:8999/eureka
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+    metadata-map:
+      contextPath: /account-management
